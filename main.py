@@ -1,5 +1,6 @@
 import files.loadfile as lf
 import files.filepath as fp
+import management.cameramanager as manager
 import pygame
 
 pygame.init()
@@ -18,6 +19,8 @@ while running:
         if event.type == pygame.KEYDOWN:  # Verifica se uma tecla foi pressionada
             if event.key == pygame.K_r:  # Verifica se a tecla é a tecla R
                 camerasettings = lf.loadcamera(fp.filepath()["camerapath"]) # Carrega novamente os parametros da camera
+                c = manager.cameramanager(camerasettings)
                 print(f"Camera: {camerasettings}")
+                print(c.viewcoordinates())
 
 pygame.quit()
