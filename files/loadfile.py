@@ -1,6 +1,22 @@
 def loadfile(filepath):
     with open(filepath, 'r') as file:
-        return file.read()
+        file = file.readlines()
+        
+    filecontent = {
+        "Nvertices":  0,
+        "Ntriangles": 0,
+        "XYZverticescoords":  [],
+        "XYZtrianglescoords": []
+    }
+    
+    content = list(filecontent.items())
+    for i, value in enumerate(file):
+        readline = value.split()
+        if i == 0: filecontent["Nvertices"], filecontent["Ntriangles"] = int(readline[0]), int(readline[1])
+        elif i <= filecontent["Nvertices"]: filecontent["XYZverticescoords"].append([float(n) for n in value.split()])
+        else: filecontent["XYZtrianglescoords"].append([float(n) for n in value.split()])
+        
+    return filecontent
         
 def loadcamera(filepath):
     with open(filepath, 'r') as file:
@@ -9,9 +25,9 @@ def loadcamera(filepath):
     camerasettings = {
         "N":  [],
         "V":  [],
-        "d":  0,
-        "hx": 0,
-        "hy": 0,
+        "d":  [],
+        "hx": [],
+        "hy": [],
         "C":  [],
     }
     
