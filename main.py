@@ -28,7 +28,9 @@ while running:
                 for i in range(m.object3d["Nvertices"]):
                     x, y = c.screencoordinates(m.object3d["XYZverticescoords"][i], window_size[0], window_size[1])
                     m.drawpixel(x, y, screen)
+                    pygame.display.flip()
                 
+
                 for i in m.object3d["indextriangles"]:
                     for enum,j in enumerate(i):
                         index = int(i[enum])-1 # retorna o valor do index ao se acessas index = intextriangles[enum]
@@ -42,15 +44,5 @@ while running:
                                 x1, y1 = c.screencoordinates(m.object3d["XYZverticescoords"][int(i[0])], window_size[0], window_size[1])
                                 m.drawline(x0, y0, x1, y1, screen)
                             except: pass
-                
-                # print(f"Camera: {camerasettings}")
-                # print(f"Ponto [1,-3,-5] em coordenadas de vista: {c.viewcoordinates([1,-3,-5])}")
-                # print(f"Informações do objeto: {lf.loadfile(fp.filepath()["triangulo"])}")
-                # print(f"Ponto [1,-3,-5] em projeção em perspectiva: {c.perspectiveview([1,-3,-5])}")
-                # print(f"Ponto [1,-3,-5] em coordenadas normalizadas: {c.normalizecoordinates([1,-3,-5])}")
-                # print(f"Ponto [1,-3,-5] em coordenadas de tela: {c.screencoordinates([1,-3,-5], window_size[0], window_size[1])}")
-                # px, py = c.screencoordinates([1,-3,-5], window_size[0], window_size[1])
-                # screen.set_at((px, py), (255, 255, 255))
-                
-    pygame.display.flip()
+                        pygame.display.flip()
 pygame.quit()
