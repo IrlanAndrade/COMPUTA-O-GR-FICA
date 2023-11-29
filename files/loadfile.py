@@ -5,8 +5,8 @@ def loadfile(filepath):
     filecontent = {
         "Nvertices":  0,
         "Ntriangles": 0,
-        "XYZverticescoords":  [],
-        "XYZtrianglescoords": []
+        "XYZverticescoords": [],
+        "indextriangles":    []
     }
     
     content = list(filecontent.items())
@@ -14,7 +14,7 @@ def loadfile(filepath):
         readline = value.split()
         if i == 0: filecontent["Nvertices"], filecontent["Ntriangles"] = int(readline[0]), int(readline[1])
         elif i <= filecontent["Nvertices"]: filecontent["XYZverticescoords"].append([float(n) for n in value.split()])
-        else: filecontent["XYZtrianglescoords"].append([float(n) for n in value.split()])
+        else: filecontent["indextriangles"].append([float(n) for n in value.split()])
         
     return filecontent
         

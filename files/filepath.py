@@ -6,6 +6,7 @@ def filepath():
         "piramide":  "objetos/piramide.byu",
         "triangulo": "objetos/triangulo.byu",
         "vaso":      "objetos/vaso.byu",
-        "camerapath":"files/camerasettings.txt"
+        "camerapath":"files/camerasettings.txt",
+        "teste"     :"objetos/test.byu"
     }
     return filespath
