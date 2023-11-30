@@ -60,9 +60,10 @@ while running:
             if event.key == pygame.K_r:  # Recarrega
                 screen.fill(black)
                 
+                text = input()
+                if text != "": objectsettings = lf.loadfile(fp.filepath()[text])
                 camerasettings = lf.loadcamera(fp.filepath()["camerapath"]) # Carrega novamente os parametros da camera
-                objectsettings = lf.loadfile(fp.filepath()["calice2"])
-                
+                                
                 c = cmanager.cameramanager(camerasettings)
                 m = mmanager.mailmanager(objectsettings)
                 
@@ -79,10 +80,10 @@ while running:
                 drawpixel(m, screen, True)
                 drawline(c, m, screen, True)
                 
-            if event.key == pygame.K_c:
+            if event.key == pygame.K_c: # Apaga o desenho atual
                 screen.fill(black)
                 
-            if event.key == pygame.K_t:
+            if event.key == pygame.K_t: # Função pra teste
                 screen.fill(black)
                 scanline(c, m, screen)
                     

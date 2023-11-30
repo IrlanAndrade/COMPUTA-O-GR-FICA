@@ -50,5 +50,17 @@ class mailmanager:
                 hightriangle = [[high[0], high[1]], [point[0], point[1]], [medium[0], medium[1]]]
                 lowtriangle  = [[medium[0], medium[1]],[point[0], point[1]], [low[0], low[1]]]
         
+        print(f"TRIANGULO ORIGINAL: {vertices}")
         print(f"TRIANGULO SUPERIOR: {hightriangle}")
         print(f"TRIANGULO INFERIOR: {lowtriangle}")
+
+        #Percorre as arestas adjascentes do vértice superior ao inferior
+        
+        hightriangleright = self.drawline(hightriangle[0][0], hightriangle[0][1], hightriangle[2][0], hightriangle[2][1], screen, False)
+        hightriangleleft  = self.drawline(hightriangle[0][0], hightriangle[0][1], hightriangle[1][0], hightriangle[1][1], screen, False)
+
+        #Percorre as arestas adjascentes do vértice inferior ao superior
+        lowtriangle = self.drawline(lowtriangle[2][0], hightriangle[2][1], hightriangle[0][0], hightriangle[0][1], screen, False)
+
+        print(hightriangle)
+        print(lowtriangle)
