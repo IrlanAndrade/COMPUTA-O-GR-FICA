@@ -25,6 +25,24 @@ def drawline(c, m, screen, animate):
             m.drawline(x0,y0, x1,y1, screen)
             if animate: pygame.display.flip()
             
+def scanline(c, m, screen):
+    indextriangle = m.object3d["indextriangles"]
+    for trianglelist in range(m.object3d["Ntriangles"]): # percorre cada listas de indices
+        verticestoorder = []
+        for verticeslist in range(len(indextriangle[0])): # percorre cada indice na listas de indices vigente
+            actualverticeslist     = [int(x-1) for x in indextriangle[trianglelist]]      
+            actualvertice          = int(actualverticeslist[verticeslist]) - 1
+                
+            x, y = c.screencoordinates(m.object3d["XYZverticescoords"][actualvertice], window_size[0], window_size[1])
+            verticestoorder.append([x, y])
+        m.scanline(verticestoorder, screen)
+        break
+    
+camerasettings = lf.loadcamera(fp.filepath()["camerapath"]) # Carrega novamente os parametros da camera
+objectsettings = lf.loadfile(fp.filepath()["vaso"]) 
+c              = cmanager.cameramanager(camerasettings)
+m              = mmanager.mailmanager(objectsettings) 
+            
 pygame.init()
 
 black       = (0, 0, 0)
@@ -33,11 +51,6 @@ screen      = pygame.display.set_mode(window_size)
 
 pygame.display.set_caption('OBJECTS 3D VIEWER')
 screen.fill(black)
-        
-camerasettings = lf.loadcamera(fp.filepath()["camerapath"]) # Carrega novamente os parametros da camera
-objectsettings = lf.loadfile(fp.filepath()["vaso"]) 
-c              = cmanager.cameramanager(camerasettings)
-m              = mmanager.mailmanager(objectsettings)
         
 running = True
 while running:
@@ -68,6 +81,10 @@ while running:
                 
             if event.key == pygame.K_c:
                 screen.fill(black)
+                
+            if event.key == pygame.K_t:
+                screen.fill(black)
+                scanline(c, m, screen)
                     
     pygame.display.flip()
 pygame.quit()
