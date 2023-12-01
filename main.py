@@ -93,10 +93,6 @@ while running:
                 
             if event.key == pygame.K_c: # Apaga o desenho atual
                 screen.fill(black)
-                
-            if event.key == pygame.K_t: # Função pra teste
-                screen.fill(black)
-                scanline(c, m, screen, True)
                     
     pygame.display.flip()
 pygame.quit()
