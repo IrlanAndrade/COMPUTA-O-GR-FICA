@@ -109,11 +109,13 @@ def getFacesByVertices(m:mmanager.mailmanager, c:cmanager.cameramanager, vertice
             
             Nface = mat.matrixsum(Nface, [c.facenormal(vertices)])
             
-    Nvertice = mat.scalarproduct(Nface, 1/3)  
+    Nvertice = mat.scalarproduct(Nface, 1/3) 
     
-    Nvertice = c.normalization(Nvertice)
+    Nverticenormal = []
+    for value in Nvertice[0]:
+        Nverticenormal.append(value/c.normalization(Nvertice))
     
-    return Nvertice 
+    return Nverticenormal 
     
     
      
@@ -162,8 +164,8 @@ while running:
                 
             if event.key == pygame.K_a: # Mostra Animado
                 screen.fill(black)
-                drawpixel(m, screen, True)
-                drawline(c, m, screen, True)
+                # drawpixel(m, screen, True)
+                # drawline(c, m, screen, True)
                 scanline(c, m, screen, True)
                 
             if event.key == pygame.K_z:
