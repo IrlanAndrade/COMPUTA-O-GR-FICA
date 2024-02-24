@@ -23,12 +23,20 @@ def loadcamera(filepath):
         file = file.readlines()
         
     camerasettings = {
-        "N":  [],
-        "V":  [],
-        "d":  [],
-        "hx": [],
-        "hy": [],
-        "C":  [],
+        "N":   [],
+        "V":   [],
+        "d":   [],
+        "hx":  [],
+        "hy":  [],
+        "C":   [],
+        "Iamb":[],
+        "Ka":  [],
+        "Il":  [],
+        "Pl":  [],
+        "Kd":  [],
+        "Od":  [],
+        "Ks":  [],
+        "n":   []
     }
     
     settings = list(camerasettings.items())
