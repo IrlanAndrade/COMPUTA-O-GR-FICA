@@ -40,7 +40,7 @@ def scanline(c, m, screen, animate):
             actualvertice          = int(actualverticeslist[verticeslist]) - 1
             x, y, z = c.screencoordinates(m.object3d["XYZverticescoords"][actualvertice], window_size[0], window_size[1])
             verticestoorder.append([x, y, z])
-        allvertices += verticestoorder
+        allvertices += m.scanline(verticestoorder, screen)
         if animate:
             sleep(0.005)
             pygame.display.flip()
@@ -99,8 +99,8 @@ while running:
             if event.key == pygame.K_z:
                 print("Carregando...")
                 allvertices = scanline(c, m, screen, False)
-                # print(allvertices) # Descomente esse código para gerar todos os vértices possíveis para teste do objeto "calice2"
                 
+                # print(allvertices) # Descomente esse código para gerar todos os vértices possíveis para teste do objeto "calice2"
                 I = c.totalLightIntense(m, [296, 525, 865])
                 pass
                 

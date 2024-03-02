@@ -208,7 +208,12 @@ class cameramanager:
     
     def getReflecion(self, m, vertice):
         lightposition = self.settings['Pl']
-        N = self.getFacesByVertices(m, vertice)
+        # N = self.getFacesByVertices(m, vertice)
+        Nnormal = []
+        for value in vertice:
+            Nnormal.append(value/self.normalization(vertice))
+        
+        N = Nnormal
         R = mat.scalarprojection(lightposition, N)
         #print(f"R: {R}")
         #print(f"N {N} | 2*R {2*R}")
@@ -240,33 +245,30 @@ class cameramanager:
         print(f"Para o ponto: {vertice}")
         
         L, Kd, Od, Ks, n, Il, Ka = self.settings['Pl'], self.settings['Kd'], self.settings['Od'], self.settings['Ks'], self.settings['n'], self.settings['Il'], self.settings['Ka']
-        #print(f"m {m} | vertice {vertice}")
-        N = self.getFacesByVertices(m, vertice)
+        
+        Nnormal = []
+        for value in vertice:
+            Nnormal.append(value/self.normalization(vertice))
+        
+        N = Nnormal
         R = self.getReflecion(m, vertice)
         V = self.getDirectViewer(vertice)
         Iamb = self.settings['Iamb']
         
-        #print(Ka, Iamb)
         Ia = mat.scalarproduct([Iamb], Ka[0])
-        # Ia = [x for x in Ia[0]]
-        #print(f"Ia {Ia}")
         
-        print(f"R: {R[0]}")
-        print(f"V: {V}")
-        print(f"N: {N}")
-        print(f"Ia: {N}")
+        print(f"R:  {R[0]}")
+        print(f"V:  {V}")
+        print(f"N:  {N}")
+        print(f"Ia: {Ia}")
         
         
         check, N = self.desconsiderLight(V, N, L)
         
         if check == False:
         
-            #print(L, N)
             Id = mat.scalarprojection(L, N)
-            #print(f"Id: {Id}")
-            #print(f"Kd: {Kd}")
             Id = mat.scalarproduct([Kd], Id)
-            #print(f"Id: {Id}")
             Id = [x * Od[i] for i, x in enumerate(Id[0])]
             Id = [[x * Il[i] for i, x in enumerate(Id)]]
             print(f"Id: {Id[0]}")
@@ -274,20 +276,13 @@ class cameramanager:
             check = self.desconsiderEspecular(V, R)
             
             if check == False:
-                #print(R, V)
                 Is = mat.scalarprojection(R[0], V)
-                #print(Is)
-                #print(n)
                 Is = Is ** n[0]
-                #print(f"Is {Is}")
-                #print(f"Ks {Ks}")
                 Is = Is * Ks[0]
-                #print(f"Il {Il}")
                 Is = mat.scalarproduct([Il], Is)
                 print(f"Is: {Is}")
                 
                 I = mat.matrixsum(Ia, Id)
-                #print(f"I: {I}")
                 I = mat.matrixsum(I, Is)
                 
             else: 
@@ -299,17 +294,15 @@ class cameramanager:
             print(f"Id: Desconsiderado")
             print(f"Ie: Desconsiderado")
             
-        #print(f"I: {I}")
+        print(f"I:  {I}")
         I = [min(x, 255) for x in I[0]]
-        print(f"I: {I}")
+        print(f"I:  {I}")
         
         return I
         
     def desconsiderLight(self, V, N, L,):
         tocheck  = mat.scalarprojection(L, N) 
         tocheck2 = mat.scalarprojection(V, N) 
-        #print(f"tc: {tocheck}")
-        #print(f"tc2: {tocheck2}")
         if tocheck < 0:
             if tocheck2 < 0:
                 #print("False")
@@ -324,15 +317,4 @@ class cameramanager:
         if tocheck < 0:
             return True
         return False
-    
-    # def paintPixel(self, m, vertice, screen):
-    #     rgb = self.totalLightIntense(m, vertice)
-    #     #print(f"rgb = {rgb}")
-    #     x, y = vertice[0], vertice[1]
-        
-    #     r = rgb[0] if rgb[0] != None else 0
-    #     g = rgb[1] if rgb[1] != None else 0
-    #     b = rgb[2] if rgb[2] != None else 0
-        
-    #     screen.set_at((x, y), (r, g, b))
                 

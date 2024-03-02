@@ -19,7 +19,7 @@ class mailmanager:
         return False
     
     def scanline(self, vertices, screen):
-        tolight = []
+        pixel = []
         
         vertices.sort(key=lambda y: y[1])
         
@@ -27,7 +27,8 @@ class mailmanager:
         medium = vertices[1]
         low    = vertices[2]
         
-        fulltriangle, tolight1  = self.drawline(high[0], high[1], high[2], low[0], low[1], low[2], screen, False)
+        fulltriangle  = self.drawline(high[0], high[1], high[2], low[0], low[1], low[2], screen, False)
+        pixel += fulltriangle
         
         for y, point in enumerate(fulltriangle):
             if point[1] == medium[1]: 
@@ -45,27 +46,27 @@ class mailmanager:
 
         rightvertice, leftvertice = ([hxb,hyb,hzb], [hxc,hyc,hzc]) if hxb > hxc else ([hxc,hyc,hzc], [hxb,hyb,hzb])
         
-        hrightline, tolight2 = self.drawline(hxa, hya, hza, rightvertice[0], rightvertice[1], rightvertice[2], screen, True)
-        hleftline, tolight3  = self.drawline(hxa, hya, hza, leftvertice[0], leftvertice[1], leftvertice[2], screen, True)
-                
-        lrightline, tolight4 = self.drawline(lxc, lyc, lzc, rightvertice[0], rightvertice[1], rightvertice[2], screen, True)
-        lleftline, tolight5  = self.drawline(lxc, lyc, lzc, leftvertice[0], leftvertice[1], leftvertice[2], screen, True)
+        hrightline = self.drawline(hxa, hya, hza, rightvertice[0], rightvertice[1], rightvertice[2], screen, True)
+        pixel += hrightline
+        hleftline  = self.drawline(hxa, hya, hza, leftvertice[0], leftvertice[1], leftvertice[2], screen, True)
+        pixel += hleftline
+            
+        lrightline = self.drawline(lxc, lyc, lzc, rightvertice[0], rightvertice[1], rightvertice[2], screen, True)
+        pixel += lrightline
+        lleftline = self.drawline(lxc, lyc, lzc, leftvertice[0], leftvertice[1], leftvertice[2], screen, True)
+        pixel += lleftline
         
         ilen = len(hleftline)
-        aux1 = []
         for i in range(ilen):
-            _, tolight6 = self.drawline(hrightline[i][0], hrightline[i][1], hrightline[i][2], hleftline[i][0], hleftline[i][1], hleftline[i][2] , screen, True)
-            aux1 += tolight6
+            pixel += self.drawline(hrightline[i][0], hrightline[i][1], hrightline[i][2], hleftline[i][0], hleftline[i][1], hleftline[i][2] , screen, True)
             
         ilen = len(lrightline)
-        aux2 = []
         for i in range(ilen):
-            _, tolight7 = self.drawline(lrightline[i][0], lrightline[i][1], lrightline[i][2], lleftline[i][0], lleftline[i][1], lleftline[i][2], screen, True)
-            aux2 += tolight7  
+            pixel += self.drawline(lrightline[i][0], lrightline[i][1], lrightline[i][2], lleftline[i][0], lleftline[i][1], lleftline[i][2], screen, True)
         
-        return tolight1, tolight2, tolight3, tolight4, tolight5, aux1, aux2
-
+        return pixel
     def drawline(self, x0, y0, z0, x1, y1, z1, screen, draw):
+        
         max_diff = max(abs(x1 - x0), abs(y1 - y0), abs(z1 - z0))
         num_points = int(max_diff)  # Determina o número de pontos automaticamente
 
@@ -81,15 +82,12 @@ class mailmanager:
             if dupindex.count(y) == 0:  
                 interpolated_points.append([x, y, z])
             
-            tolight = []
-            
             if self.checkzbuffer(y, x, z):
-                if draw == True: 
-                    tolight += [x, y, z]
+                if draw == True:
                     self.drawpixel(x, y, screen)
-                    self.zbuffer[y-1][x-1] = z     
+                    self.zbuffer[y-1][x-1] = z  
                     
-        return interpolated_points, tolight
+        return interpolated_points
 
     
         
