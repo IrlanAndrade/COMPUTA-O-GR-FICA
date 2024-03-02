@@ -1,7 +1,7 @@
 def scalarprojection(matrixa, matrixb): # []
     scalar = 0
     for i, value in enumerate(matrixa): 
-        scalar += int(value) * matrixb[i] 
+        scalar += value * matrixb[i] 
         
     return scalar
 
